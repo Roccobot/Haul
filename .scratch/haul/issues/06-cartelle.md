@@ -1,7 +1,7 @@
 # Cartelle e sottocartelle dei download
 
 Type: grilling
-Status: open
+Status: claimed
 Blocked by: 03
 
 ## Question

@@ -12,3 +12,16 @@
 - Le skill del repo vivono in `.agents/skills`, e `.claude/skills` è il collegamento che le mostra
   a Claude Code. Quelle della mappa (`setup-matt-pocock-skills`, `wayfinder` e le skill che chiama)
   sono collegamenti alle skill dell'hub, che va clonato accanto a questo repo, come per gli hook.
+
+## Agent skills
+
+### Issue tracker
+
+Le mappe e i ticket delle skill di Matt Pocock (`/wayfinder`) vivono come file Markdown in
+`.scratch/` (scelta `Tracker-01`); i lavori restano sulla bacheca Trello, nella lista `Haul`, e la
+card del lavoro cita la mappa. Vedi `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Un contesto solo: `GLOSSARY.md` e `docs/adr/` alla radice, creati da `/domain-modeling` quando un
+termine o una decisione si fissa. Vedi `docs/agents/domain.md`.

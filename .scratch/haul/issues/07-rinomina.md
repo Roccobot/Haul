@@ -1,7 +1,7 @@
 # La rinomina automatica
 
 Type: grilling
-Status: claimed
+Status: resolved
 Blocked by: 03
 
 ## Question
@@ -14,6 +14,55 @@ per file già scaricati. Le possibilità reali le dice la ricerca
 [Le opzioni di gallery-dl e il modo di guidarlo](03-opzioni-di-gallery-dl.md).
 
 ## Answer
+
+Deciso con Rocco il 2026-11-21 (cinque giri a scelta multipla, le sigle sono le sue risposte).
+Nomi di serie di gallery-dl letti sul sorgente della 1.32.21 (`filename_fmt`): quasi tutti numerici
+(Pixiv `{id}_p{num}`, X `{tweet_id}_{num}`, Instagram `{media_id}`); NSFWAlbum ha i campi `studio`,
+`models` e `title`. I predefiniti di NameMangler di Rocco, **esempi** delle sostituzioni che fa
+spesso e non regole da copiare, sono riassunti per genere in
+[I predefiniti di rinomina di NameMangler](../research/predefiniti-namemangler.md).
+
+**Principio**: la rinomina è un insieme di criteri **fissi** decisi da Haul (`Regole-01`), senza
+impostazioni, che valgono per i soli file nuovi (`Esistenti-01`). I 'tipi di download' sono casi
+riconosciuti dal nome (`Tipo-01`), non siti o formati.
+
+1. **Base** (`Base-01`): `Titolo NN.ext`, col numero del file nel post.
+2. **Senza titolo** (`Senzatitolo-01`): l'inizio del testo del post (X, Instagram, Tumblr),
+   ripulito; senza testo, `nomeCartella ###.ext`.
+3. **Alfabeti non latini** (`Alfabeti-01`): un nome del tutto in un altro alfabeto (cirillico,
+   greco, arabo, ebraico, cinese, giapponese, coreano) diventa `nomeCartella ###.ext`. Il
+   `nomeCartella` è il nome della cartella della raccolta; se è straniero anche quello, il nome del
+   proprietario, poi quello del sito (`Cartella-01`); le cartelle restano come sono. Il `###` ha
+   tre cifre e continua dal numero più alto già nella cartella (`Numeri-01`).
+4. **Pulizia dei titoli** (`Pulizia-01`, `Generali-01`, `Generali-02`): si tolgono flair, emoji,
+   emoticon (`:)`, `<3`), caratteri di altri alfabeti, tag fra parentesi quadre (`[F]`, `(OC)`),
+   hashtag, menzioni e link, domini (`.com`), sigle come `OC`, `POV`, `4K`, `HD`, `WIP`, risoluzioni
+   e conteggi (`4000px`, `120 pics`, `1.2 GB`), parentesi rimaste vuote e punteggiatura ripetuta;
+   il tutto maiuscolo diventa normale. Le lettere latine con segni (`ł`, `č`, `ő`) restano
+   (`Latino-01`).
+5. **Tipografia** (`Generali-01`): apici e virgolette curve diventano `'`, trattini lunghi e tilde
+   diventano `-`, le parti del nome si separano con ` - ` (il trattino dentro una parola resta), i
+   nomi dei siti prendono le maiuscole giuste (`TikTok`, `YouTube`, `DeviantArt`, `OnlyFans`).
+6. **Caratteri vietati** (`Vietati-01`): `\ / : * ? " < > #` e simili si cancellano, `|` diventa
+   `-`; vale per file e cartelle, e sostituisce il `_` deciso prima in
+   [Cartelle e sottocartelle dei download](06-cartelle.md).
+7. **Maiuscole** (`Inglese-01`): restano quelle del titolo; nessuna regola propria dell'inglese
+   (Title Case, contrazioni, `i` che diventa `I`).
+8. **Lunghezza** (`Lunghezza-02`): oltre 120 caratteri il titolo si taglia all'ultima parola
+   intera; numero e identificativo restano.
+9. **Omonimi** (`Omonimi-01`, `Omonimi-02`): se il nome è già preso da un altro file, in fondo si
+   aggiunge l'identificativo del post, senza parentesi (`OC 01 abc123.jpg`). Così un file nuovo
+   non è scambiato per un doppione da saltare.
+10. **NSFWAlbum** (`Nsfwalbum-01`, `Nsfwalbum-02`): `Studio - Anna & Bea - Titolo 001.jpg` dai
+    campi di gallery-dl, con le parti vuote tolte; la cartella della raccolta ha lo stesso schema,
+    e il proprietario è lo studio.
+11. **In più** (`Altro-01`): estensioni uniformi e minuscole (`JPEG`, `jpe`, `jfif` diventano
+    `jpg`, `m4v` diventa `mp4`); nomi incollati separati (`WhiteFluffyDog` diventa
+    `White Fluffy Dog`).
+
+**Resta alla costruzione**: l'ordine in cui le regole si applicano, i campi di testo e di flair per
+sito (`link_flair_text` di Reddit è da verificare con `gallery-dl -K`), e una prova per ogni regola
+con titoli veri dei siti di riferimento.
 
 ## Comments
 
@@ -37,3 +86,8 @@ per file già scaricati. Le possibilità reali le dice la ricerca
   lo stesso schema, e proprietario lo studio; `Altro-01` estensioni uniformi e nomi incollati
   separati, più i predefiniti di rinomina di NameMangler che Rocco passa: il ticket resta aperto
   finché non arrivano.
+- Quinto giro, coi predefiniti arrivati (esempi, non regole da copiare): `Generali-01` tipografia,
+  separatore ` - ` e nomi dei siti, e le sigle (`OC`, `POV`, `4K`...) tolte del tutto (risposta
+  libera); `Generali-02` domini, parentesi vuote, risoluzioni e conteggi, emoticon tolti;
+  `Vietati-01` caratteri vietati cancellati e `|` che diventa `-`; `Inglese-01` nessuna regola
+  propria dell'inglese; `Latino-01` le lettere latine con segni restano; `Chiusura-01` ticket chiuso.

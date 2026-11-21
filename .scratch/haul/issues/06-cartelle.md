@@ -44,8 +44,10 @@ lo schema è di Haul.
   scaricato dopo lo trova e lo salta.
 - **File già presenti** (`Doppioni-01`): si saltano (`skip: true`, insieme all'archivio di
   `Archivio-01`), e alla fine della raccolta Haul dice quanti file c'erano già.
-- **Caratteri** (`Caratteri-01`): `path-restrict: windows`, cioè `\ / : * ? " < > |` diventano
-  `_`, per nomi validi anche su dischi exFAT e su un NAS.
+- **Caratteri** (`Caratteri-01`, corretto da `Vietati-01` in
+  [La rinomina automatica](07-rinomina.md)): i caratteri vietati da Windows, per nomi validi anche
+  su dischi exFAT e su un NAS, si **cancellano**, e `|` diventa `-`; fino al 2026-11-21 la scelta
+  era sostituirli con `_`.
 - **Lunghezza** (`Lunghezza-01`): ogni nome di cartella preso da un titolo si taglia a 80
   caratteri, sotto il limite di 255 byte di macOS anche con kanji e accenti.
 - **Disco assente** (`Disco-01`): se la radice è su un disco non collegato, la coda si ferma e Haul

@@ -76,8 +76,12 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
 - [Cartelle e sottocartelle dei download](issues/06-cartelle.md): radice `~/Downloads/Haul`, l'unica
   cosa che si cambia; albero fisso `Radice/Sito/Proprietario/Raccolta` scritto da Haul per ogni
   sito, con l'albero del sito dentro la raccolta; profili nella sezione (`Gallery`, `Posts`);
-  doppioni saltati e contati; caratteri di Windows sostituiti, nomi a 80 caratteri; coda ferma se
+  doppioni saltati e contati; caratteri di Windows cancellati, nomi a 80 caratteri; coda ferma se
   il disco manca.
+- [La rinomina automatica](issues/07-rinomina.md): criteri fissi, solo per i file nuovi;
+  `Titolo NN`, e `nomeCartella ###` per i nomi senza titolo o in altri alfabeti; pulizia di tag,
+  emoji, sigle e conteggi; tipografia e caratteri vietati cancellati; taglio a 120 caratteri;
+  identificativo in fondo agli omonimi; schema proprio per NSFWAlbum.
 
 ## Not yet specified
 

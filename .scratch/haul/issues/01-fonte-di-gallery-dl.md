@@ -1,7 +1,7 @@
 # Da dove prende Haul l'eseguibile di gallery-dl
 
 Type: research
-Status: open
+Status: resolved
 Blocked by:
 
 ## Question
@@ -25,3 +25,23 @@ Per ogni strada, con la fonte primaria e la data:
 Esito atteso: una strada consigliata, con le alternative scartate e il perché.
 
 ## Answer
+
+Ricerca completa in [fonte-di-gallery-dl.md](../research/fonte-di-gallery-dl.md) (2026-11-21).
+
+- **Strada consigliata (`Fonte-03`)**: Haul include un interprete Python di `python-build-standalone`
+  per `arm64`, firmato e autenticato con l'app; gallery-dl, `requests` e `yt-dlp` si scaricano da
+  PyPI come wheel pure (solo codice Python) in `Application Support`, e Haul lancia `python -m
+  gallery_dl` come processo separato. Dalla rete non arriva nessun eseguibile: niente quarantena,
+  niente autenticazione a ogni versione. Integrità con lo SHA-256 di PyPI e la firma GPG del
+  manutentore; la versione nuova si legge da `https://pypi.org/pypi/gallery-dl/json`, e la
+  precedente resta finché la nuova non supera una prova.
+- **Premesse cambiate**: lo sviluppo di gallery-dl è passato su Codeberg (2026-04, dopo una
+  segnalazione DMCA); le stabili hanno di nuovo eseguibili, ma solo per Windows e Linux; macOS 27
+  gira solo su Mac con chip Apple, quindi basta `arm64`.
+- **Scartate**: la build giornaliera di `gdl-org/builds` (sviluppo, firma ad hoc, nessuna firma del
+  manutentore); una build PyInstaller fatta da Haul a ogni versione, tenuta di riserva.
+- **Da provare in un prototipo**: i permessi dell'interprete sotto il runtime protetto, i tempi di
+  avvio. **Da confermare**: l'impronta della chiave GPG del manutentore; le FAQ della FSF sulla
+  licenza. `ffmpeg` resta a carico dell'utente, con una guida.
+- La scelta della fonte la conferma Rocco nel ticket
+  [I confini fra nucleo e interfaccia](12-confini-del-nucleo.md).

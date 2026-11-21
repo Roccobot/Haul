@@ -1,7 +1,7 @@
 # Firma, autenticazione e aggiornamenti di Haul
 
 Type: research
-Status: open
+Status: resolved
 Blocked by:
 
 ## Question
@@ -22,3 +22,19 @@ Esito atteso: la catena consigliata dalla build al file che si scarica, con i pa
 solo Rocco (iscrizione, certificati) separati da quelli automatici.
 
 ## Answer
+
+Ricerca completa in [firma-e-aggiornamenti.md](../research/firma-e-aggiornamenti.md) (2026-11-21).
+
+- **Catena consigliata**: un tag di versione avvia un flusso di Actions su `xcode-27` (Xcode 27.2):
+  build `arm64`, firma Developer ID con Hardened Runtime e marca temporale, DMG firmato,
+  notarizzazione con `notarytool` e una chiave API Team, `stapler`, poi `generate_appcast` di
+  Sparkle 2 con la chiave EdDSA; appcast su GitHub Pages e DMG nelle Releases. Firma e
+  pubblicazione partono solo dopo l'approvazione di Rocco (environment protetto).
+- **Entitlement**: nessuna eccezione e niente sandbox; gallery-dl è un processo separato, quindi la
+  validazione delle librerie non lo riguarda (deduzione da provare nel primo prototipo).
+- **Solo Rocco**: iscrizione all'Apple Developer Program, certificato Developer ID come `.p12`,
+  chiave API Team, chiave EdDSA con copie di sicurezza, segreti del repo, attivazione di Pages.
+- **Costi**: 99 USD l'anno ad Apple; Actions gratuito sui runner standard per un repo pubblico;
+  Sparkle gratuito.
+- **Rischi**: l'immagine `xcode-27` è in anteprima; a chi macOS chieda il consenso per le cartelle
+  quando scrive gallery-dl non è chiaro; i tempi di build vanno misurati al primo rilascio.

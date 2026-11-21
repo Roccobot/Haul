@@ -54,14 +54,30 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
 - La destinazione, il canale di distribuzione, il prezzo e la licenza, le lingue, tema e accento,
   la versione, il pubblico della configurazione guidata e l'icona: decisi da Rocco
   nell'intervista di partenza del 2026-11-21 (Notes, sopra).
+- [Da dove prende Haul l'eseguibile di gallery-dl](issues/01-fonte-di-gallery-dl.md): proposta
+  `Fonte-03`, un Python incluso e firmato con l'app e gallery-dl scaricato da PyPI come codice
+  Python puro, senza eseguibili dalla rete; lo sviluppo di gallery-dl è passato su Codeberg, e
+  per macOS non esiste un eseguibile stabile ufficiale. La conferma è di Rocco.
+- [Come parlano il nucleo in Rust e l'interfaccia in Swift](issues/02-ponte-rust-swift.md):
+  UniFFI, con un XCFramework fatto da uno script del repo; basta `arm64`; da provare presto con
+  firma e notarizzazione vere.
+- [Le opzioni di gallery-dl e il modo di guidarlo](issues/03-opzioni-di-gallery-dl.md): 654
+  chiavi in `configuration.rst` 1.32.21, dodici gruppi da curare a mano, il resto generato in un
+  catalogo con una prova a ogni versione; gallery-dl si guida con un `config.json` di Haul isolato
+  e un'uscita a righe con prefissi propri.
+- [Firma, autenticazione e aggiornamenti di Haul](issues/04-firma-e-aggiornamenti.md): Developer
+  ID, notarizzazione e Sparkle 2 da un flusso di Actions avviato da un tag e approvato da Rocco;
+  99 USD l'anno ad Apple, il resto gratuito.
 
 ## Not yet specified
 
 - **La finestra principale**: com'è fatta mentre scarica, la coda, la cronologia dei download, le
   anteprime; dipende da [Come si avvia e si segue un download](issues/05-come-si-scarica.md).
 - **Notifiche, icona nel Dock, barra dei menu**: quanto Haul resta visibile mentre lavora.
-- **Video e formati speciali**: se e come Haul procura `ffmpeg` o `yt-dlp`, che gallery-dl usa per
-  alcuni siti; dipende dalla fonte dell'eseguibile.
+- **Video e formati speciali**: `yt-dlp` arriva da PyPI con gallery-dl, mentre `ffmpeg` non ha una
+  fonte ufficiale per macOS; resta da decidere come Haul guida l'utente a procurarlo.
+- **I permessi delle cartelle**: a chi chiede macOS il consenso quando a scrivere è gallery-dl, e
+  come lo spiega Haul; da osservare nel primo prototipo.
 - **Errori e registro**: come si mostrano a chi non conosce gallery-dl un sito che cambia, un
   accesso scaduto, un limite di richieste.
 - **Prove automatiche e collaudo**: quali prove per nucleo e interfaccia, dove girano (il repo è

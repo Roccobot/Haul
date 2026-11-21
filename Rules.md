@@ -23,9 +23,11 @@
 - **Fatti già accertati che la mappa deve considerare** (2026-11-21):
   - il Liquid Glass vero esiste solo in SwiftUI e AppKit: un'interfaccia scritta in Rust lo può
     solo imitare, e le regole chiedono comunque l'interfaccia nativa;
-  - le versioni stabili di gallery-dl (`mikf/gallery-dl`, ultima 1.32.20) escono senza eseguibili;
-    un `gallery-dl_macos` pronto si trova solo nelle build giornaliere di `gdl-org/builds`, e
-    l'alternativa è la versione stabile da PyPI con un Python incluso;
+  - lo sviluppo di gallery-dl è passato da GitHub a Codeberg ad aprile 2026, dopo una segnalazione
+    DMCA; le versioni stabili (ultima 1.32.21, del 2026-11-21) hanno eseguibili solo per Windows e
+    Linux, e un `gallery-dl_macos` si trova solo nelle build giornaliere di `gdl-org/builds`, senza
+    una firma vera; la ricerca della mappa propone un Python incluso nell'app e gallery-dl da PyPI
+    (ticket 01 in `.scratch/haul/issues/`, corretto il 2026-11-21 dopo la ricerca);
   - `configuration.rst` è lungo circa 245 KB, con centinaia di opzioni: la finestra delle
     impostazioni conviene generarla da lì, curando a mano solo le voci principali.
 

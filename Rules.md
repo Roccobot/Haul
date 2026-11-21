@@ -32,5 +32,17 @@
 ## 🌿 Ramo e versione
 
 - **Ramo principale `main`.**
-- **La versione non esiste ancora**: si sceglie con la prima build, con una fonte sola, e si
-  scrive qui e nel nucleo di `AGENTS.md`.
+- **SemVer da 0.1.0** (scelta `Versione-01` di Rocco, 2026-11-21): versioni 0.x durante la
+  costruzione e 1.0.0 alla prima versione pubblica, con una fonte sola nel progetto Xcode, letta
+  anche dal nucleo, e il numero di build separato, che è quello che confrontano gli aggiornamenti.
+  Il file preciso si sceglie con la prima build, e si scrive qui e nel nucleo di `AGENTS.md`.
+
+## 🗺️ Le scelte della mappa
+
+- **La mappa vive in `.scratch/haul/map.md`**, coi ticket in `.scratch/haul/issues/`; le scelte
+  dell'intervista di partenza (canale, prezzo e licenza, lingue, tema e accento, versione) sono
+  nelle sue Notes, e quelle difficili da rovesciare in `docs/adr/`.
+- **Interfaccia in italiano e inglese**, che segue la lingua del sistema (`Lingue-01`); **tema e
+  colore d'accento di sistema** (`Tema-01`, `Accento-01`).
+- **Distribuzione diretta fuori dal Mac App Store**, gratuita e open source con licenza GPL-3.0
+  (`Canale-01`, `Prezzo-01`, `Licenza-01`).

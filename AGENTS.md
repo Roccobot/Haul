@@ -284,6 +284,9 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Nucleo e interfaccia separati**: la proposta di partenza è il nucleo in Rust e l'interfaccia in
   Swift (`rules/Roccobot.md` § '🏛️ Nucleo funzionale e interfaccia separati, sempre'); la mappa la
   conferma o la cambia.
-- **Prima della costruzione si concordano** nella mappa la fonte dell'eseguibile di gallery-dl, la
-  versione con la sua fonte unica e la lingua e il tema dell'interfaccia: oggi il repo contiene
-  solo i file di base.
+- **La mappa vive in `.scratch/haul/map.md`**: la costruzione parte quando ha fissato la specifica
+  della 1.0, compresa la fonte dell'eseguibile di gallery-dl (`Rules.md` § '🗺️ Le scelte della
+  mappa').
+- **Già deciso**: SemVer da 0.1.0 con una fonte sola (`Rules.md` § '🌿 Ramo e versione');
+  interfaccia in italiano e inglese, tema e accento di sistema; distribuzione diretta fuori dal Mac
+  App Store, gratuita, GPL-3.0.

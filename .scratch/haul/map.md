@@ -73,6 +73,11 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
   alla volta, con `Ferma`, `Riprendi`, `Annulla`; avanzamento per file e totale solo se noto; due
   schede, `Download in corso` e `Raccolte scaricate` (7 giorni di serie); archivio di gallery-dl
   locale, con esporta e unisci fra Mac.
+- [Cartelle e sottocartelle dei download](issues/06-cartelle.md): radice `~/Downloads/Haul`, l'unica
+  cosa che si cambia; albero fisso `Radice/Sito/Proprietario/Raccolta` scritto da Haul per ogni
+  sito, con l'albero del sito dentro la raccolta; profili nella sezione (`Gallery`, `Posts`);
+  doppioni saltati e contati; caratteri di Windows sostituiti, nomi a 80 caratteri; coda ferma se
+  il disco manca.
 
 ## Not yet specified
 

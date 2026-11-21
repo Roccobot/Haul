@@ -14,6 +14,11 @@ La sequenza di passi del primo avvio che prepara Haul, partendo da zero o da un 
 importato.
 _Avoid_: onboarding, wizard, procedura iniziale
 
+**Raccolta**:
+Un indirizzo dato a Haul con tutti i file che ne vengono, scaricati in una cartella sola; è
+l'unità della coda.
+_Avoid_: task, download (come nome), attività, lavoro
+
 **Impostazioni avanzate**:
 La parte della finestra delle impostazioni generata dalle opzioni di gallery-dl, accanto alle voci
 curate a mano.

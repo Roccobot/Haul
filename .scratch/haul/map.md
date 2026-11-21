@@ -68,12 +68,16 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
 - [Firma, autenticazione e aggiornamenti di Haul](issues/04-firma-e-aggiornamenti.md): Developer
   ID, notarizzazione e Sparkle 2 da un flusso di Actions avviato da un tag e approvato da Rocco;
   99 USD l'anno ad Apple, il resto gratuito.
+- [Come si avvia e si segue un download](issues/05-come-si-scarica.md): la **raccolta** (un
+  indirizzo, una cartella) entra in coda da campo, trascinamento, menu Condividi o appunti; due
+  alla volta, con `Ferma`, `Riprendi`, `Annulla`; avanzamento per file e totale solo se noto; due
+  schede, `Download in corso` e `Raccolte scaricate` (7 giorni di serie); archivio di gallery-dl
+  locale, con esporta e unisci fra Mac.
 
 ## Not yet specified
 
-- **La finestra principale**: com'è fatta mentre scarica, la coda, la cronologia dei download, le
-  anteprime; dipende da [Come si avvia e si segue un download](issues/05-come-si-scarica.md).
-- **Notifiche, icona nel Dock, barra dei menu**: quanto Haul resta visibile mentre lavora.
+- **Icona nel Dock e barra dei menu**: quanto Haul resta visibile mentre lavora (la notifica di
+  fine raccolta è decisa).
 - **Video e formati speciali**: `yt-dlp` arriva da PyPI con gallery-dl, mentre `ffmpeg` non ha una
   fonte ufficiale per macOS; resta da decidere come Haul guida l'utente a procurarlo.
 - **I permessi delle cartelle**: a chi chiede macOS il consenso quando a scrivere è gallery-dl, e

@@ -1,7 +1,7 @@
 # L'accesso ai siti che lo chiedono
 
 Type: grilling
-Status: open
+Status: claimed
 Blocked by: 03
 
 ## Question

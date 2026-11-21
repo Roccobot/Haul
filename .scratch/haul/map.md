@@ -82,6 +82,10 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
   `Titolo NN`, e `nomeCartella ###` per i nomi senza titolo o in altri alfabeti; pulizia di tag,
   emoji, sigle e conteggi; tipografia e caratteri vietati cancellati; taglio a 120 caratteri;
   identificativo in fondo agli omonimi; schema proprio per NSFWAlbum.
+- [L'accesso ai siti che lo chiedono](issues/08-accesso-ai-siti.md): un `Accedi` per sito col modo
+  scelto da Haul (OAuth, poi cookie del browser, poi password) e il successivo come piano B; al
+  bisogno e nella sezione `Account`, un account per sito; tutto nel Portachiavi; pausa e
+  `Accedi di nuovo` quando scade.
 
 ## Not yet specified
 
@@ -91,8 +95,8 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
   fonte ufficiale per macOS; resta da decidere come Haul guida l'utente a procurarlo.
 - **I permessi delle cartelle**: a chi chiede macOS il consenso quando a scrivere è gallery-dl, e
   come lo spiega Haul; da osservare nel primo prototipo.
-- **Errori e registro**: come si mostrano a chi non conosce gallery-dl un sito che cambia, un
-  accesso scaduto, un limite di richieste.
+- **Errori e registro**: come si mostrano a chi non conosce gallery-dl un sito che cambia e un
+  limite di richieste (l'accesso scaduto è deciso).
 - **Prove automatiche e collaudo**: quali prove per nucleo e interfaccia, dove girano (il repo è
   pubblico, quindi Actions su macOS non si paga), e il documento di feedback del collaudo.
 - **Accessibilità**: VoiceOver, tastiera, contrasto, testo più grande.

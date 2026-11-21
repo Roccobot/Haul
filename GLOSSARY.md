@@ -29,6 +29,11 @@ Chi possiede o ospita una raccolta: l'autore o l'utente, oppure il gruppo o la r
 contiene quando un autore non c'è.
 _Avoid_: autore (come termine generale), creatore, account
 
+**Accesso**:
+Il permesso che Haul ha di entrare in un sito come l'utente, uno per sito, comunque sia stato
+ottenuto.
+_Avoid_: login, autenticazione, credenziali (come termine generale), sessione
+
 **Impostazioni avanzate**:
 La parte della finestra delle impostazioni generata dalle opzioni di gallery-dl, accanto alle voci
 curate a mano.

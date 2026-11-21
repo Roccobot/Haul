@@ -1,7 +1,7 @@
 # La rinomina automatica
 
 Type: grilling
-Status: open
+Status: claimed
 Blocked by: 03
 
 ## Question

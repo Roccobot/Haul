@@ -164,6 +164,8 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   SlimVer: +0,01 un ritocco, il decimale successivo una funzionalità, l'intero successivo una
   release maggiore; si chiede conferma se un ritocco arriva a un decimale tondo o una
   funzionalità a un intero (§ '🌿 Workflow git e versioni').
+- **Gli algoritmi confrontano il numero di build** (`versionCode`, `CFBundleVersion`), mai la
+  versione mostrata, che è per le persone.
 - **Più sessioni sullo stesso progetto: il numero lo prende chi mergia per primo**, e chi arriva
   dopo riparte dal ramo principale col numero successivo. Prima di un lavoro che rilascia si
   guarda se un'altra sessione è sullo stesso progetto, e le sessioni si accordano fra loro, non
@@ -217,6 +219,21 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Alla fine di un lavoro si fa il bilancio di chiusura**: ogni voce si confronta col codice del
   ramo principale e ha un esito dichiarato; **brief e bacheca si aggiornano**; si ferma ciò che
   resta acceso in sottofondo (§ '🧾 Il bilancio di chiusura').
+
+## 🔁 Il collaudo
+
+- **Chi rilascia non collauda**: a ogni versione si aggiorna il **documento di feedback** (DF) del
+  progetto, e il collaudo lo fa l'utente (§ '🔁 Il giro del collaudo', per tutta la sezione).
+- Il giro si prende **intero, solo quando lo dice lui**; il documento non si ripubblica mentre lo
+  compila, e una domanda che è già lì non si ripete in chat.
+- **Il lavoro nuovo comincia dopo l'invio del giro precedente, o con la sua conferma**: a un via
+  dato col giro non ancora letto si risponde col bivio a scelta multipla (aspetto il feedback, o
+  vado avanti con un DF cumulativo?).
+- **Una modifica a un DF si fa a tutti gli omologhi** nello stesso giro: una **divergenza
+  funzionale non deve esistere**, e chi non raggiunge il repo dell'altro DF lo dice all'utente
+  nello stesso turno.
+- **Una prova che cita un file ne dà la scorciatoia**: allegato in cloud, percorso col pulsante
+  `Copia` in locale.
 
 ## 🏗️ Sviluppo
 

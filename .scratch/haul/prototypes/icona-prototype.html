@@ -1,0 +1,160 @@
+<title>Haul, bozzetti dell'icona</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!--
+  PROTOTIPO USA E GETTA del ticket 'I bozzetti dell'icona in Liquid Glass' della mappa di Haul.
+  Tre direzioni, ognuna nei quattro aspetti delle icone di macOS 27 e in piccolo. Sono bozzetti
+  da cui Rocco sceglie la direzione: il disegno finale è suo.
+-->
+<style>
+/* Layout: una riga per direzione, con i quattro aspetti in fila e le misure piccole accanto. */
+:root {
+  --page: #eef0f4; --ink: #1d1d1f; --ink-2: #5f6168; --line: rgba(60,60,67,.16); --card: #ffffff;
+  --wall: linear-gradient(135deg, #7aa7d9, #d9a7c7 55%, #f2d29b);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --page: #151518; --ink: #f5f5f7; --ink-2: #a9aab0; --line: rgba(235,235,245,.14); --card: #222226; color-scheme: dark } }
+:root[data-theme="dark"] { --page: #151518; --ink: #f5f5f7; --ink-2: #a9aab0; --line: rgba(235,235,245,.14); --card: #222226; color-scheme: dark }
+body { background: var(--page); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 40px; }
+.wrap { max-width: 1060px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+h1 { font-size: 24px; margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 18px; margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-2); }
+.dir { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+.ap { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
+.tile { width: 148px; height: 148px; border-radius: 22px; display: grid; place-items: center; }
+.tile.light { background: #f4f4f6; } .tile.darkbg { background: #1b1b1e; } .tile.wall { background: var(--wall); }
+.tile svg { width: 118px; height: 118px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.22)); }
+.small { display: flex; gap: 12px; align-items: flex-end; padding: 10px 12px; border-radius: 12px; background: #f4f4f6; }
+.small svg { display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
+.layers { font-size: 12.5px; color: var(--ink-2); }
+.layers b { color: var(--ink); }
+
+/* Appearance tokens: every icon reads --bg, --f1, --f2, --f3 and --edge. */
+.ap-default.dir-a { --bg: #138a8a; --f1: #e9fbf7; --f2: #9fe3d6; --f3: #5cc2b3; --edge: rgba(255,255,255,.75); }
+.ap-default.dir-b { --bg: #d9771f; --f1: #fff4e4; --f2: #ffd29a; --f3: #f4a94e; --edge: rgba(255,255,255,.75); }
+.ap-default.dir-c { --bg: #3d4fc4; --f1: #eef0ff; --f2: #b7c0ff; --f3: #7d8cf0; --edge: rgba(255,255,255,.75); }
+.ap-dark { --bg: #1f1f23; --edge: rgba(255,255,255,.35); }
+.ap-dark.dir-a { --f1: #9fe3d6; --f2: #5cc2b3; --f3: #2f8f84; }
+.ap-dark.dir-b { --f1: #ffd29a; --f2: #f4a94e; --f3: #a8641c; }
+.ap-dark.dir-c { --f1: #b7c0ff; --f2: #7d8cf0; --f3: #4553b5; }
+.ap-tint { --bg: #2a1d0c; --f1: #ffc46b; --f2: rgba(255,196,107,.7); --f3: rgba(255,196,107,.42); --edge: rgba(255,214,150,.5); }
+.ap-clear { --bg: rgba(255,255,255,.16); --f1: rgba(255,255,255,.92); --f2: rgba(255,255,255,.62); --f3: rgba(255,255,255,.38); --edge: rgba(255,255,255,.8); }
+</style>
+
+<div class="wrap">
+  <div>
+    <h1>Haul: tre direzioni per l'icona</h1>
+    <p class="muted">Prototipo usa e getta. Ogni bozzetto è diviso nei livelli che servono a Icon Composer, e si vede nei quattro aspetti delle icone di macOS 27 e alle misure del Dock e del Finder. Forme e colori sono un punto di partenza: il disegno finale è tuo.</p>
+  </div>
+  <div id="dirs" class="wrap"></div>
+</div>
+
+<!-- Shared definitions: the sheen of the glass, identical for every icon. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.38"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<script>
+// Throwaway prototype, Rocco Casadei, a.k.a. Roccobot. DOM and SVG built with nodes only.
+const NS = 'http://www.w3.org/2000/svg';
+function s(tag, attrs, ...kids) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  kids.flat().forEach(k => k && el.append(k));
+  return el;
+}
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  kids.flat().forEach(k => k != null && el.append(k.nodeType ? k : document.createTextNode(k)));
+  return el;
+}
+const glass = (extra) => Object.assign({ stroke: 'var(--edge)', 'stroke-width': '0.8' }, extra);
+
+// The tile: the shape is drawn in the file, as macOS 27 icons are, with the sheen on top.
+function tile() {
+  return [s('rect', { x: 0, y: 0, width: 100, height: 100, rx: 22.5, style: 'fill:var(--bg)' }),
+          s('rect', { x: 0, y: 0, width: 100, height: 100, rx: 22.5, fill: 'url(#sheen)' })];
+}
+
+// ── Direction A: stack of pictures and a heavy arrow ──
+function iconA() {
+  return [
+    s('rect', glass({ x: 22, y: 19, width: 48, height: 38, rx: 6, transform: 'rotate(-10 46 38)', style: 'fill:var(--f3)' })),
+    s('g', { transform: 'rotate(5 52 44)' },
+      s('rect', glass({ x: 28, y: 25, width: 48, height: 38, rx: 6, style: 'fill:var(--f2)' })),
+      s('circle', { cx: 64, cy: 35, r: 4, style: 'fill:var(--f1)' }),
+      s('path', { d: 'M32 59 L45 44 L53 52 L59 46 L72 59 Z', style: 'fill:var(--f3)' })),
+    s('path', glass({ d: 'M42.5 40 H57.5 V60 H68 L50 81 L32 60 H42.5 Z', 'stroke-linejoin': 'round', style: 'fill:var(--f1)' })),
+  ];
+}
+
+// ── Direction B: an open crate that pictures fall into ──
+function iconB() {
+  return [
+    s('path', { d: 'M18 50 L50 37 L82 50 L50 63 Z', style: 'fill:var(--f3)' }),
+    s('rect', glass({ x: 33, y: 14, width: 26, height: 21, rx: 4, transform: 'rotate(-14 46 24)', style: 'fill:var(--f2)' })),
+    s('rect', glass({ x: 46, y: 24, width: 24, height: 19, rx: 4, transform: 'rotate(11 58 33)', style: 'fill:var(--f1)' })),
+    s('path', glass({ d: 'M18 50 L50 63 L82 50 L82 72 L50 86 L18 72 Z', 'stroke-linejoin': 'round', style: 'fill:var(--f1)' })),
+    s('path', { d: 'M50 63 V86', stroke: 'var(--f3)', 'stroke-width': '1.6' }),
+  ];
+}
+
+// ── Direction C: a cargo hook lifting a picture ──
+function iconC() {
+  return [
+    s('path', { d: 'M50 4 V20', stroke: 'var(--f3)', 'stroke-width': '4', 'stroke-linecap': 'round' }),
+    s('circle', { cx: 50, cy: 25, r: 5, fill: 'none', stroke: 'var(--f2)', 'stroke-width': '3.5' }),
+    s('path', { d: 'M50 30 V40 a9 9 0 1 1 -9 9', fill: 'none', stroke: 'var(--f2)', 'stroke-width': '5.5', 'stroke-linecap': 'round' }),
+    s('g', { transform: 'rotate(-7 50 70)' },
+      s('rect', glass({ x: 26, y: 52, width: 48, height: 36, rx: 5, style: 'fill:var(--f1)' })),
+      s('circle', { cx: 62, cy: 62, r: 3.6, style: 'fill:var(--f3)' }),
+      s('path', { d: 'M30 84 L43 68 L51 76 L57 70 L70 84 Z', style: 'fill:var(--f2)' })),
+  ];
+}
+
+const DIRS = [
+  { key: 'a', name: 'Pila e freccia', draw: iconA,
+    idea: 'Le immagini si accumulano e la freccia le porta giù sul Mac: dice subito che Haul scarica, e la pila dice che sono tante.',
+    layers: ['sfondo: la piastrella in tinta unita', 'livello 1: la pila di due immagini, vetro', 'livello 2: la freccia, vetro in primo piano'] },
+  { key: 'b', name: 'Cassa', draw: iconB,
+    idea: 'Una cassa aperta in cui cadono le immagini: il bottino raccolto, cioè il senso di haul. La più calda e personale delle tre.',
+    layers: ['sfondo: la piastrella in tinta unita', 'livello 1: l\'interno della cassa e le immagini che cadono', 'livello 2: il fronte della cassa, vetro'] },
+  { key: 'c', name: 'Gancio', draw: iconC,
+    idea: 'Un gancio da carico che solleva un\'immagine: la traduzione letterale di to haul, trainare. La più insolita fra le icone dei download.',
+    layers: ['sfondo: la piastrella in tinta unita', 'livello 1: la fune e il gancio', 'livello 2: l\'immagine sollevata, vetro'] },
+];
+const APPEAR = [
+  { cls: 'ap-default', label: 'Predefinita', bg: 'light' },
+  { cls: 'ap-dark', label: 'Scura', bg: 'darkbg' },
+  { cls: 'ap-tint', label: 'Colorata (accento arancione)', bg: 'darkbg' },
+  { cls: 'ap-clear', label: 'Trasparente', bg: 'wall' },
+];
+
+function icon(dir, cls, size) {
+  return s('svg', { viewBox: '0 0 100 100', width: size, height: size, version: '1.1', class: cls + ' dir-' + dir.key, role: 'img', 'aria-label': 'Icona ' + dir.name },
+    tile(), dir.draw());
+}
+
+const root = document.getElementById('dirs');
+DIRS.forEach(d => {
+  const row = h('div', { class: 'row' },
+    APPEAR.map(a => h('div', { class: 'ap' }, h('div', { class: 'tile ' + a.bg }, icon(d, a.cls, 118)), a.label)),
+    h('div', { class: 'ap' }, h('div', { class: 'small' }, icon(d, 'ap-default', 64), icon(d, 'ap-default', 32), icon(d, 'ap-default', 16)), 'Dock, Finder, elenco'));
+  root.append(h('section', { class: 'dir' },
+    h('h2', {}, d.key.toUpperCase() + ' · ' + d.name),
+    h('p', {}, d.idea),
+    row,
+    h('p', { class: 'layers' }, h('b', {}, 'Livelli per Icon Composer: '), d.layers.join('; ') + '.')));
+});
+</script>

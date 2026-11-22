@@ -86,6 +86,9 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
   scelto da Haul (OAuth, poi cookie del browser, poi password) e il successivo come piano B; al
   bisogno e nella sezione `Account`, un account per sito; tutto nel Portachiavi; pausa e
   `Accedi di nuovo` quando scade.
+- [La configurazione guidata](issues/09-configurazione-guidata.md): assistente con la colonna dei
+  passi a sinistra; due strade (da zero, o importando il `config.json` con un resoconto); gallery-dl
+  preparato in sottofondo; notifiche saltabili; nessun passo per gli accessi; si rifà dal menu.
 
 ## Not yet specified
 

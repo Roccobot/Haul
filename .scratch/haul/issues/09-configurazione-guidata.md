@@ -1,7 +1,7 @@
 # La configurazione guidata
 
 Type: prototype
-Status: open
+Status: claimed
 Blocked by: 05, 06, 08
 
 ## Question

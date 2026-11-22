@@ -1,0 +1,370 @@
+<title>Haul, configurazione guidata</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!--
+  PROTOTIPO USA E GETTA del ticket 'La configurazione guidata' della mappa di Haul.
+  Tre varianti della configurazione guidata, scelte con la barra in basso o con le frecce,
+  e ricordate nell'indirizzo (#variante-a, #variante-b, #variante-c).
+  Nessun dato reale: file, percorsi e conteggi dell'importazione sono esempi.
+-->
+<style>
+/* Layout: una scrivania di macOS con una finestra al centro; la finestra cambia forma per variante. */
+:root {
+  --desk-a: #c9d6e8; --desk-b: #e9dcc9;
+  --win: rgba(250, 250, 252, 0.86); --win-solid: #f6f6f8;
+  --side: rgba(236, 238, 243, 0.72);
+  --fg: #1d1d1f; --fg-2: #5f6168; --fg-3: #8e9097;
+  --line: rgba(60, 60, 67, 0.16);
+  --accent: #0a74ff; --accent-fg: #ffffff; --accent-soft: rgba(10, 116, 255, 0.12);
+  --ok: #24a148; --warn: #c27c0e; --field: rgba(255, 255, 255, 0.9);
+  --bar: #1d1d1f; --bar-fg: #f5f5f7;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-win: 22px; --radius-ctl: 999px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --desk-a: #1c2433; --desk-b: #2b2320;
+  --win: rgba(40, 40, 44, 0.86); --win-solid: #2a2a2e;
+  --side: rgba(52, 52, 58, 0.72);
+  --fg: #f5f5f7; --fg-2: #b4b5bb; --fg-3: #85878e;
+  --line: rgba(235, 235, 245, 0.14);
+  --accent: #3a8dff; --accent-fg: #ffffff; --accent-soft: rgba(58, 141, 255, 0.2);
+  --ok: #3ccf6a; --warn: #f0a93b; --field: rgba(30, 30, 34, 0.9);
+  --bar: #f5f5f7; --bar-fg: #1d1d1f;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --desk-a: #1c2433; --desk-b: #2b2320;
+  --win: rgba(40, 40, 44, 0.86); --win-solid: #2a2a2e;
+  --side: rgba(52, 52, 58, 0.72);
+  --fg: #f5f5f7; --fg-2: #b4b5bb; --fg-3: #85878e;
+  --line: rgba(235, 235, 245, 0.14);
+  --accent: #3a8dff; --accent-fg: #ffffff; --accent-soft: rgba(58, 141, 255, 0.2);
+  --ok: #3ccf6a; --warn: #f0a93b; --field: rgba(30, 30, 34, 0.9);
+  --bar: #f5f5f7; --bar-fg: #1d1d1f;
+  color-scheme: dark }
+
+html, body { min-height: 100%; }
+body {
+  background: radial-gradient(120% 90% at 20% 10%, var(--desk-a), var(--desk-b));
+  color: var(--fg); font-family: var(--font); font-size: 14px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 110px;
+}
+.note { max-width: 760px; margin: 0 auto 18px; color: var(--fg-2); font-size: 12.5px; text-wrap: balance; }
+.note b { color: var(--fg); }
+
+/* ── Window chrome, shared ── */
+.win {
+  margin: 0 auto; background: var(--win); border-radius: var(--radius-win);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.08);
+  backdrop-filter: blur(30px) saturate(1.6); -webkit-backdrop-filter: blur(30px) saturate(1.6);
+  overflow: hidden; max-width: 100%;
+}
+.titlebar { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; }
+.lights { display: flex; gap: 8px; }
+.lights i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+.lights i:nth-child(1) { background: #ff5f57; } .lights i:nth-child(2) { background: #febc2e; } .lights i:nth-child(3) { background: #28c840; }
+.titlebar .t { flex: 1; text-align: center; font-weight: 600; font-size: 13px; color: var(--fg-2); margin-right: 52px; }
+
+h1 { font-size: 26px; line-height: 1.15; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { font-size: 19px; margin: 0; letter-spacing: -0.005em; text-wrap: balance; }
+h3 { font-size: 13px; margin: 0; }
+p { margin: 0; }
+.muted { color: var(--fg-2); }
+.small { font-size: 12px; color: var(--fg-3); }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+.stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.spacer { flex: 1; }
+
+/* ── Controls ── */
+button { font: inherit; cursor: pointer; }
+.btn { border: 1px solid var(--line); background: var(--field); color: var(--fg); border-radius: var(--radius-ctl);
+  padding: 6px 16px; min-height: 30px; }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; font-weight: 600; }
+.btn.link { border: 0; background: none; color: var(--accent); padding: 6px 4px; }
+.btn:hover { filter: brightness(1.05); } .btn:focus-visible { filter: brightness(1.08); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.choice { display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%;
+  border: 1px solid var(--line); background: var(--field); color: var(--fg); border-radius: 14px; padding: 14px; }
+.choice.on { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.choice .ic { font-size: 22px; line-height: 1; }
+.choice b { display: block; margin-bottom: 2px; }
+.field { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--field);
+  border-radius: 10px; padding: 8px 12px; min-width: 0; }
+.field .mono { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.toggle { width: 38px; height: 22px; border-radius: 999px; background: var(--line); border: 0; position: relative; flex: none; }
+.toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: left .15s; }
+.toggle.on { background: var(--ok); } .toggle.on::after { left: 18px; }
+.progress { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.progress > i { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s; }
+.tree { font-family: var(--mono); font-size: 12px; color: var(--fg-2); background: var(--field); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px; white-space: pre; overflow-x: auto; }
+.list { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 12px; background: var(--field); overflow: hidden; }
+.list > div { display: flex; gap: 10px; padding: 10px 12px; align-items: flex-start; }
+.list > div + div { border-top: 1px solid var(--line); }
+.list .k { flex: none; width: 22px; text-align: center; }
+.list .v { min-width: 0; flex: 1; }
+.tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.tag.warn { background: rgba(194,124,14,.14); color: var(--warn); }
+.tag.ok { background: rgba(36,161,72,.14); color: var(--ok); }
+.example { font-size: 11px; color: var(--fg-3); font-style: italic; }
+
+/* ── Variant A: assistente con barra laterale ── */
+.va { width: 780px; }
+.va .body { display: grid; grid-template-columns: 220px 1fr; min-height: 470px; }
+.va nav { background: var(--side); padding: 6px 12px 16px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
+.va nav .it { display: flex; gap: 10px; align-items: center; padding: 7px 10px; border-radius: 8px; color: var(--fg-2); font-size: 13px; }
+.va nav .it.cur { background: var(--accent-soft); color: var(--fg); font-weight: 600; }
+.va nav .dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--fg-3); display: grid; place-items: center; font-size: 11px; flex: none; }
+.va nav .it.done .dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+.va nav .gdl { margin-top: auto; padding: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--fg-2); }
+.va main { padding: 26px 30px 0; display: flex; flex-direction: column; min-width: 0; }
+.va main .content { flex: 1; }
+.va footer { display: flex; gap: 10px; align-items: center; padding: 16px 0 20px; border-top: 1px solid var(--line); margin-top: 22px; }
+@media (max-width: 720px) {
+  .va .body { grid-template-columns: 1fr; }
+  .va nav { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 8px; }
+  .va nav .it span.lbl { display: none; } .va nav .gdl { display: none; }
+  .va main { padding: 20px 18px 0; }
+}
+
+/* ── Variant B: pagina unica ── */
+.vb { width: 700px; }
+.vb .head { padding: 8px 32px 22px; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid var(--line); }
+.vb .seg { display: inline-flex; padding: 3px; background: var(--line); border-radius: 999px; gap: 2px; align-self: flex-start; }
+.vb .seg button { border: 0; background: none; color: var(--fg); padding: 5px 14px; border-radius: 999px; font-size: 13px; }
+.vb .seg button.on { background: var(--win-solid); box-shadow: 0 1px 3px rgba(0,0,0,.15); font-weight: 600; }
+.vb .strip { display: flex; gap: 12px; align-items: center; font-size: 12.5px; color: var(--fg-2); }
+.vb .strip .progress { flex: 1; }
+.vb section { display: grid; grid-template-columns: 170px 1fr; gap: 18px; padding: 18px 32px; border-bottom: 1px solid var(--line); }
+.vb section > h3 { padding-top: 6px; color: var(--fg-2); font-weight: 600; }
+.vb .foot { padding: 18px 32px 22px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 640px) { .vb section { grid-template-columns: 1fr; gap: 8px; padding: 16px 18px; } .vb .head, .vb .foot { padding-left: 18px; padding-right: 18px; } }
+
+/* ── Variant C: schede centrate ── */
+.vc { width: 520px; position: relative; }
+.vc .card { padding: 16px 40px 26px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; min-height: 420px; }
+.vc .glyph { width: 86px; height: 86px; border-radius: 24px; display: grid; place-items: center; font-size: 40px;
+  background: linear-gradient(160deg, var(--accent-soft), transparent); border: 1px solid var(--line); }
+.vc .card .stack { width: 100%; text-align: left; }
+.vc .dots { display: flex; gap: 7px; justify-content: center; }
+.vc .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+.vc .dots i.on { background: var(--accent); width: 20px; border-radius: 999px; }
+.vc .actions { display: flex; gap: 10px; justify-content: center; margin-top: auto; flex-wrap: wrap; }
+.vc .gbar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: transparent; }
+.vc .gbar i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+@media (max-width: 560px) { .vc .card { padding: 12px 20px 24px; } }
+
+/* ── Prototype switcher, not part of the design ── */
+.switcher { position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+  display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px;
+  background: var(--bar); color: var(--bar-fg); box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: 13px; max-width: calc(100% - 32px); }
+.switcher button { border: 0; background: none; color: inherit; width: 34px; height: 34px; border-radius: 50%; font-size: 16px; }
+.switcher button:hover, .switcher button:focus-visible { background: rgba(127,127,127,.25); outline: none; }
+.switcher .lbl { padding: 0 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<p class="note"><b>Prototipo usa e getta.</b> Tre forme della configurazione guidata di Haul, con le decisioni già prese nella mappa. Cambia variante con la barra in basso o con le frecce. I file, i percorsi e i conteggi dell'importazione sono esempi.</p>
+<div id="stage"></div>
+<div class="switcher" role="group" aria-label="Variante del prototipo">
+  <button id="prev" aria-label="Variante precedente" title="Variante precedente">&#8592;</button>
+  <span class="lbl" id="vlabel"></span>
+  <button id="next" aria-label="Variante successiva" title="Variante successiva">&#8594;</button>
+</div>
+
+<script>
+// Throwaway prototype, Rocco Casadei, a.k.a. Roccobot. DOM built with nodes only, never innerHTML.
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'on') { for (const [ev, fn] of Object.entries(v)) el.addEventListener(ev, fn); }
+    else if (k === 'class') el.className = v;
+    else if (k === 'style') el.setAttribute('style', v);
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  return el;
+}
+
+const VARIANTS = [
+  { key: 'a', name: 'Assistente con barra laterale' },
+  { key: 'b', name: 'Pagina unica, tutto pronto' },
+  { key: 'c', name: 'Schede centrate, una domanda per volta' },
+];
+
+// Shared state, the same for every variant.
+const S = { path: null, step: 0, root: '~/Downloads/Haul', notify: true, file: '~/.config/gallery-dl/config.json', gdl: 0 };
+
+// Simulated preparation of gallery-dl: Python bundled with the app, gallery-dl from PyPI.
+setInterval(() => { if (S.gdl < 100) { S.gdl = Math.min(100, S.gdl + 3); updateGdl(); } }, 300);
+function gdlText() {
+  if (S.gdl >= 100) return 'gallery-dl 1.32.21 pronto';
+  return 'Preparo gallery-dl 1.32.21... ' + S.gdl + '%';
+}
+function updateGdl() {
+  document.querySelectorAll('[data-gdl-bar]').forEach(b => { b.style.width = S.gdl + '%'; });
+  document.querySelectorAll('[data-gdl-text]').forEach(t => { t.textContent = gdlText(); });
+}
+
+// Steps per path. Every step knows its title, whether it can be skipped, and how to draw itself.
+function steps() {
+  const common = [{ id: 'welcome', title: 'Benvenuto' }];
+  if (S.path === 'import') return common.concat([
+    { id: 'file', title: 'La tua configurazione' },
+    { id: 'report', title: 'Che cosa ho trovato' },
+    { id: 'notify', title: 'Notifiche', skip: true },
+    { id: 'done', title: 'Pronto' },
+  ]);
+  return common.concat([
+    { id: 'folder', title: 'Dove salvare' },
+    { id: 'notify', title: 'Notifiche', skip: true },
+    { id: 'done', title: 'Pronto' },
+  ]);
+}
+
+function treePreview() {
+  return S.root + '/\n  Pixiv/\n    Nome autore/\n      Artworks/\n        Titolo opera 01.jpg\n  Reddit/\n    r-nome/\n      Posts/';
+}
+
+// ── Step bodies, reused by A and C ──
+function stepBody(id, compact) {
+  if (id === 'welcome') return h('div', { class: 'stack' },
+    h('p', { class: 'muted' }, 'Haul scarica immagini e gallerie da centinaia di siti con gallery-dl. Bastano due minuti per prepararlo.'),
+    h('button', { class: 'choice' + (S.path === 'zero' ? ' on' : ''), on: { click: () => { S.path = 'zero'; render(); } } },
+      h('span', { class: 'ic' }, '✨'), h('span', {}, h('b', {}, 'Parti da zero'), h('span', { class: 'muted' }, 'Valori pronti, li cambi quando vuoi.'))),
+    h('button', { class: 'choice' + (S.path === 'import' ? ' on' : ''), on: { click: () => { S.path = 'import'; render(); } } },
+      h('span', { class: 'ic' }, '\u{1F4E5}'), h('span', {}, h('b', {}, 'Usa la tua configurazione di gallery-dl'), h('span', { class: 'muted' }, 'Importa il tuo config.json: cartella, accessi e opzioni.'))),
+  );
+  if (id === 'folder') return h('div', { class: 'stack' },
+    h('p', { class: 'muted' }, 'Haul mette ogni raccolta in una cartella sua, divisa per sito e proprietario. Tu scegli solo la cartella principale.'),
+    h('div', { class: 'field' }, h('span', {}, '\u{1F4C1}'), h('span', { class: 'mono' }, S.root),
+      h('button', { class: 'btn', on: { click: () => { S.root = S.root === '~/Downloads/Haul' ? '/Volumes/Archivio/Haul' : '~/Downloads/Haul'; render(); } } }, 'Cambia...')),
+    compact ? null : h('div', { class: 'tree' }, treePreview()),
+    h('p', { class: 'small' }, 'macOS ti chiederà una volta il permesso di usare la cartella Download.'),
+  );
+  if (id === 'file') return h('div', { class: 'stack' },
+    h('p', { class: 'muted' }, 'Ho trovato una configurazione di gallery-dl su questo Mac.'),
+    h('div', { class: 'field' }, h('span', {}, '\u{1F4C4}'), h('span', { class: 'mono' }, S.file),
+      h('button', { class: 'btn', on: { click: () => { S.file = S.file.startsWith('~/.config') ? '~/Documents/gallery-dl.conf' : '~/.config/gallery-dl/config.json'; render(); } } }, 'Scegli un altro...')),
+    h('p', { class: 'small' }, 'Il file originale resta com\'è: Haul ne fa una copia sua.'),
+  );
+  if (id === 'report') return h('div', { class: 'stack' },
+    h('p', { class: 'example' }, 'Esempio di resoconto, con dati inventati.'),
+    h('div', { class: 'list' },
+      h('div', {}, h('span', { class: 'k' }, '✅'), h('div', { class: 'v' }, h('b', {}, 'Cartella principale tenuta'), h('div', { class: 'mono' }, '/Volumes/Archivio/gallery-dl'))),
+      h('div', {}, h('span', { class: 'k' }, '\u{1F5C2}️'), h('div', { class: 'v' }, h('b', {}, 'Sottocartelle con lo schema di Haul'), h('div', { class: 'muted' }, 'Il tuo schema per sito non si usa: Haul ordina per sito, proprietario e raccolta.'))),
+      h('div', {}, h('span', { class: 'k' }, '\u{1F510}'), h('div', { class: 'v' }, h('b', {}, '3 accessi spostati nel Portachiavi'), h('div', { class: 'muted' }, 'Pixiv, ExHentai, Newgrounds. Ti consiglio di cancellare le password dal file originale.'))),
+      h('div', {}, h('span', { class: 'k' }, '⚙️'), h('div', { class: 'v' }, h('b', {}, '41 opzioni importate'), h('div', { class: 'muted' }, 'Le trovi nelle impostazioni, molte nella sezione avanzata.'))),
+      h('div', {}, h('span', { class: 'k' }, '❓'), h('div', { class: 'v' }, h('b', {}, h('span', { class: 'tag warn' }, 'Da decidere'), ' 2 opzioni che Haul non conosce'), h('div', { class: 'mono' }, 'extractor.foo.bar, postprocessors[2]'), h('div', { class: 'muted' }, 'Proposta: restano nella copia di Haul e gallery-dl le usa, senza un controllo nelle impostazioni.'))),
+    ),
+  );
+  if (id === 'notify') return h('div', { class: 'stack' },
+    h('div', { class: 'field' }, h('span', { style: 'flex:1' }, 'Avvisami quando una raccolta finisce, se Haul non è in primo piano'),
+      h('button', { class: 'toggle' + (S.notify ? ' on' : ''), 'aria-label': 'Notifiche', on: { click: () => { S.notify = !S.notify; render(); } } })),
+    h('p', { class: 'small' }, 'Se lo attivi, macOS ti chiederà il permesso. Il suono a fine coda resta spento: lo accendi nelle impostazioni.'),
+  );
+  if (id === 'done') return h('div', { class: 'stack' },
+    h('div', { class: 'list' },
+      h('div', {}, h('span', { class: 'k' }, '\u{1F4C1}'), h('div', { class: 'v' }, 'Salvo in ', h('span', { class: 'mono' }, S.path === 'import' ? '/Volumes/Archivio/gallery-dl' : S.root))),
+      h('div', {}, h('span', { class: 'k' }, '\u{1F514}'), h('div', { class: 'v' }, S.notify ? 'Notifiche a fine raccolta' : 'Notifiche spente')),
+      h('div', {}, h('span', { class: 'k' }, '⬇️'), h('div', { class: 'v', 'data-gdl-text': '' }, gdlText())),
+    ),
+    h('p', { class: 'muted' }, 'Per cominciare, incolla un indirizzo con ⌘V o trascina un link sulla finestra. Ai siti che chiedono un accesso entri quando serve.'),
+    h('p', { class: 'small' }, 'Puoi rifare questa configurazione da Haul > Configurazione guidata...'),
+  );
+}
+const GLYPH = { welcome: '\u{1F44B}', folder: '\u{1F4C1}', file: '\u{1F4C4}', report: '\u{1F4CB}', notify: '\u{1F514}', done: '✅' };
+const LEAD = {
+  welcome: 'Benvenuto in Haul', folder: 'Dove salvo i download?', file: 'Quale configurazione importo?',
+  report: 'Ecco che cosa ho importato', notify: 'Vuoi un avviso a fine raccolta?', done: 'Haul è pronto',
+};
+
+function canNext() { return S.step !== 0 || S.path; }
+function go(d) { const n = steps().length; S.step = Math.max(0, Math.min(n - 1, S.step + d)); render(); }
+function titlebar(t) { return h('div', { class: 'titlebar' }, h('div', { class: 'lights' }, h('i'), h('i'), h('i')), h('div', { class: 't' }, t)); }
+
+// ── Variant A ──
+function VariantA() {
+  const st = steps(); const cur = st[S.step];
+  const nav = h('nav', {}, st.map((s, i) => h('div', { class: 'it' + (i === S.step ? ' cur' : '') + (i < S.step ? ' done' : '') },
+    h('span', { class: 'dot' }, i < S.step ? '✓' : String(i + 1)), h('span', { class: 'lbl' }, s.title))),
+    S.path === null ? h('div', { class: 'small', style: 'padding:6px 10px' }, 'I passi dipendono dalla strada che scegli.') : null,
+    h('div', { class: 'gdl' }, h('span', { 'data-gdl-text': '' }, gdlText()), h('div', { class: 'progress' }, h('i', { 'data-gdl-bar': '', style: 'width:' + S.gdl + '%' }))));
+  const last = S.step === st.length - 1;
+  return h('div', { class: 'win va' }, titlebar('Configura Haul'),
+    h('div', { class: 'body' }, nav,
+      h('main', {}, h('div', { class: 'content stack' }, h('h1', {}, LEAD[cur.id]), stepBody(cur.id)),
+        h('footer', {},
+          S.step > 0 ? h('button', { class: 'btn', on: { click: () => go(-1) } }, 'Indietro') : null,
+          h('span', { class: 'spacer' }),
+          cur.skip ? h('button', { class: 'btn link', on: { click: () => go(1) } }, 'Salta') : null,
+          h('button', { class: 'btn primary', disabled: !canNext(), on: { click: () => last ? reset() : go(1) } }, last ? 'Apri Haul' : 'Continua')))));
+}
+
+// ── Variant B ──
+function VariantB() {
+  if (!S.path) S.path = 'zero';
+  const imp = S.path === 'import';
+  const seg = h('div', { class: 'seg', role: 'tablist' },
+    h('button', { class: !imp ? 'on' : '', on: { click: () => { S.path = 'zero'; render(); } } }, 'Parti da zero'),
+    h('button', { class: imp ? 'on' : '', on: { click: () => { S.path = 'import'; render(); } } }, 'Importa config.json'));
+  const sec = (title, body) => h('section', {}, h('h3', {}, title), body);
+  return h('div', { class: 'win vb' }, titlebar('Benvenuto in Haul'),
+    h('div', { class: 'head' },
+      h('h1', {}, 'Tutto è già pronto. Controlla e comincia.'),
+      h('p', { class: 'muted' }, 'Haul ha scelto i valori più comuni. Cambia solo quello che vuoi: il resto è nelle impostazioni.'),
+      seg,
+      h('div', { class: 'strip' }, h('span', { 'data-gdl-text': '' }, gdlText()), h('div', { class: 'progress' }, h('i', { 'data-gdl-bar': '', style: 'width:' + S.gdl + '%' })))),
+    imp ? sec('Configurazione', stepBody('file')) : null,
+    imp ? sec('Resoconto', stepBody('report')) : sec('Cartella', stepBody('folder')),
+    sec('Notifiche', stepBody('notify')),
+    h('div', { class: 'foot' },
+      h('span', { class: 'small' }, 'Rifai questa configurazione da Haul > Configurazione guidata...'),
+      h('span', { class: 'spacer' }),
+      h('button', { class: 'btn primary', on: { click: reset } }, 'Inizia a usare Haul')));
+}
+
+// ── Variant C ──
+function VariantC() {
+  const st = steps(); const cur = st[S.step]; const last = S.step === st.length - 1;
+  return h('div', { class: 'win vc' }, titlebar(''),
+    h('div', { class: 'card' },
+      h('div', { class: 'glyph', 'aria-hidden': 'true' }, GLYPH[cur.id]),
+      h('h2', {}, LEAD[cur.id]),
+      stepBody(cur.id, true),
+      h('div', { class: 'actions' },
+        S.step > 0 ? h('button', { class: 'btn', on: { click: () => go(-1) } }, 'Indietro') : null,
+        cur.skip ? h('button', { class: 'btn', on: { click: () => go(1) } }, 'Non ora') : null,
+        h('button', { class: 'btn primary', disabled: !canNext(), on: { click: () => last ? reset() : go(1) } }, last ? 'Apri Haul' : 'Continua')),
+      h('div', { class: 'dots', 'aria-label': 'Passo ' + (S.step + 1) + ' di ' + st.length }, st.map((s, i) => h('i', { class: i === S.step ? 'on' : '' }))),
+      h('p', { class: 'small', 'data-gdl-text': '' }, gdlText())),
+    h('div', { class: 'gbar' }, h('i', { 'data-gdl-bar': '', style: 'width:' + S.gdl + '%' })));
+}
+
+function reset() { S.step = 0; S.path = null; S.gdl = 0; render(); }
+
+// ── Switcher ──
+function currentKey() { const m = /^#variante-([a-c])$/.exec(location.hash); return m ? m[1] : 'a'; }
+function setKey(k) { location.hash = 'variante-' + k; }
+function cycle(d) { const i = VARIANTS.findIndex(v => v.key === currentKey()); setKey(VARIANTS[(i + d + VARIANTS.length) % VARIANTS.length].key); }
+document.getElementById('prev').addEventListener('click', () => cycle(-1));
+document.getElementById('next').addEventListener('click', () => cycle(1));
+document.addEventListener('keydown', e => {
+  const t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.key === 'ArrowLeft') cycle(-1); if (e.key === 'ArrowRight') cycle(1);
+});
+window.addEventListener('hashchange', () => { S.step = 0; render(); });
+
+function render() {
+  const k = currentKey(); const v = VARIANTS.find(x => x.key === k);
+  document.getElementById('vlabel').textContent = k.toUpperCase() + ' (' + v.name + ')';
+  const stage = document.getElementById('stage');
+  stage.replaceChildren(k === 'a' ? VariantA() : k === 'b' ? VariantB() : VariantC());
+}
+render();
+</script>

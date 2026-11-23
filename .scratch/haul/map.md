@@ -89,6 +89,8 @@ sette le richieste di Rocco decise fino al punto in cui la costruzione parte sen
 - [La configurazione guidata](issues/09-configurazione-guidata.md): assistente con la colonna dei
   passi a sinistra; due strade (da zero, o importando il `config.json` con un resoconto); gallery-dl
   preparato in sottofondo; notifiche saltabili; nessun passo per gli accessi; si rifà dal menu.
+- [I bozzetti dell'icona in Liquid Glass](issues/10-icona.md): un gancio da carico che solleva
+  un'immagine, infilato in un buco della foto, su piastrella indaco; il disegno finale è di Rocco.
 
 ## Not yet specified
 
